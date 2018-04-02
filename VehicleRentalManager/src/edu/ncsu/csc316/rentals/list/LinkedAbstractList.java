@@ -15,22 +15,15 @@ public class LinkedAbstractList<E> {
 	private ListNode back;
 	/** The number of elements in the list */
 	private int size;
-	/** The number of elements the list can store */
-	private int capacity;
 	
 	/**
 	 * Constructs a LinkedAbstractList object of a specified capacity.
-	 * @param capacity the maximum number of elements that the list can hold
 	 * @throws IllegalArgumentException if the capacity is less than zero or less than the current list's size
 	 */
-	public LinkedAbstractList(int capacity) {
-		if (capacity < 0) {
-			throw new IllegalArgumentException("Capacity cannot be less than zero.");
-		}
+	public LinkedAbstractList() {
 		this.front = null;
 		this.back = null;
 		this.size = 0;
-		this.capacity = capacity;
 	}
 	
 	/**
@@ -42,10 +35,6 @@ public class LinkedAbstractList<E> {
 	 * @throws IndexOutOfBoundsException if the index is less than zero or greater than the list's size
 	 */
 	public void add(int idx, E element) {
-		//Check if the list is full
-		if (this.size() == this.capacity) {
-			throw new IllegalArgumentException("List is full.");
-		}
 		//Check for null input data
 		if (element == null) {
 			throw new NullPointerException("Cannot add null elements.");

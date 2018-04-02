@@ -14,15 +14,15 @@ public class Vertex implements Comparable<Vertex> {
 	private int day;
 	/** */
 	private LinkedAbstractList<Edge> incidentEdges;
-	/** */
-	private int position;
 	
 	/* Fields used by Dijkstra's algorithm for generating the shortest path */
 	
 	/** */
-	private boolean found;
-	/** */
 	private double cumulativeCost;
+	/** */
+	private int position;
+	/** */
+	private boolean found;
 	/** */
 	private Vertex parent;
 	/** */
@@ -32,8 +32,10 @@ public class Vertex implements Comparable<Vertex> {
 	/**
 	 * 
 	 */
-	public Vertex() {
-		// TODO Auto-generated constructor stub
+	public Vertex(int day) {
+		this.day = day;
+		this.incidentEdges = new LinkedAbstractList<Edge>();
+		this.resetVertex();
 	}
 
 	/**
@@ -67,6 +69,15 @@ public class Vertex implements Comparable<Vertex> {
 	public double getCumulativeCost() {
 		return this.cumulativeCost;
 	}
+	
+	/**
+	 * 
+	 * @param e
+	 */
+	public void addIncidentEdge(Edge e) {
+		this.incidentEdges.add(this.incidentEdges.size(), e);
+	}
+	
 	/**
 	 * 
 	 */
@@ -85,7 +96,11 @@ public class Vertex implements Comparable<Vertex> {
 	 * of the graph.
 	 */
 	public void resetVertex() {
-		
+		this.found = false;
+		this.cumulativeCost = 0;
+		this.parent = null;
+		this.parentEdge = null;
+		this.position = -1;
 	}
 
 }

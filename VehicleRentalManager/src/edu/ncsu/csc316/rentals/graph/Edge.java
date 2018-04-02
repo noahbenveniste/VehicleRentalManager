@@ -20,8 +20,12 @@ public class Edge implements Comparable<Edge> {
 	/**
 	 * 
 	 */
-	public Edge() {
-		// TODO Auto-generated constructor stub
+	public Edge(Vertex startDay, Vertex endDay, double cost, String make, String model) {
+		this.startDay = startDay;
+		this.endDay = endDay;
+		this.cost = cost;
+		this.make = make;
+		this.model = model;
 	}
 
 	/**

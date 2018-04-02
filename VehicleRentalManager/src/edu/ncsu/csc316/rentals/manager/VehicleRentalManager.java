@@ -5,7 +5,14 @@ import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import edu.ncsu.csc316.rentals.graph.Edge;
+import edu.ncsu.csc316.rentals.graph.Vertex;
+import edu.ncsu.csc316.rentals.list.ArrayList;
+
 public class VehicleRentalManager {
+	
+	/** */
+	private ArrayList<Vertex> adjList;
 
 	/**
 	 * Constructs a new Rental manager with the given input files
@@ -14,7 +21,7 @@ public class VehicleRentalManager {
 	 *            - the path to the employee input file
 	 */
 	public VehicleRentalManager(String pathToFile) {
-		// TODO Auto-generated constructor stub
+		this.adjList = new ArrayList<Vertex>();
 	}
 	
 	/**
@@ -39,7 +46,7 @@ public class VehicleRentalManager {
 	 * @return the String representation of the rentals
 	 */
 	public String getRentalsForDay(int day) {
-	    // TODO Add your code here
+	    // List the incident edges for the specified day
 		return null;
 	}
 	
@@ -103,10 +110,34 @@ public class VehicleRentalManager {
 				String make = currEdge.next();
 				String model = currEdge.next();
 				
+				/* 
+				  1. Check if the adjacency list already has vertex objects corresponding to the START_DAY
+		             and END_DAY values read in from the line
+		              -these values correspond to the index + 1 in the list where the vertex object should be placed
+		       		  i. The index has a vertex already: grab its reference and use it to construct the edge
+		       		 ii. The index DOESN'T have a vertex: create a new Vertex object, add it to the list, use it
+		       		     to create the edge object
+		       	  2. Add the newly create edge object to the incident edge list for each vertex (just look them up in the list
+		             by index)
+				 */
 				
+				// If the adjList doesn't already contain a vertex for the start day
+				if ( adjList.get(startDay - 1) == null ) {
+					adjList.set(startDay - 1, new Vertex(startDay));
+				}
 				
+				// If the adjList doesn't already contain a vertex for the end day
+				if ( adjList.get(endDay - 1) == null) {
+					adjList.set(endDay - 1, new Vertex(endDay));
+				}
+				
+				// Create the edge object using the data parsed from the current line in the file
+				Edge e = new Edge(adjList.get(startDay - 1), adjList.get(endDay - 1), cost, make, model);
+				
+				// Add the newly created edge to the start day and end day's incident edge lists
+				adjList.get(startDay - 1).addIncidentEdge(e);
+				adjList.get(endDay - 1).addIncidentEdge(e);
 
-				
 				// Close the scanner for the line
 				currEdge.close();
 				
