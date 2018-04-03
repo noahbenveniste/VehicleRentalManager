@@ -64,12 +64,12 @@ public class VehicleRentalManager {
 	    // in the range
 	    Vertex curr = adjList.get(end - 1);
 	    
-	    do {
+	    while (curr.getParentEdge() != null && curr.getParent() != null) {
 	    	sb = new StringBuilder();
 	    	totalCost += curr.getParentEdge().getCost(); // TODO: NPE being thrown here
 	    	s.push(curr.getParentEdge().toString());
 	    	curr = curr.getParent();
-	    } while (curr.getParent() != null);
+	    }
 
 	    sb = new StringBuilder("Rental total is $");
 	    Formatter f = new Formatter(sb);
