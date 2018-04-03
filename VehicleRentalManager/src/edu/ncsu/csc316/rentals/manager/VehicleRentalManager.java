@@ -44,8 +44,7 @@ public class VehicleRentalManager {
 	 * @return the String representation of the rentals
 	 */
 	public String getRentals(int start, int end) {
-		System.out.println("Start: " + start);
-		System.out.println("End: " + end);
+		
 		
 		// Call dijkstra's algorithm to handle getting the shortest path
 	    dijkstra(start, end);
@@ -68,7 +67,7 @@ public class VehicleRentalManager {
 	    
 	    do {
 	    	sb = new StringBuilder();
-	    	totalCost += curr.getParentEdge().getCost();
+	    	totalCost += curr.getParentEdge().getCost(); // TODO: NPE being thrown here
 	    	s.push(curr.getParentEdge().toString());
 	    	curr = curr.getParent();
 	    } while (curr.getParent() != null);
@@ -194,6 +193,10 @@ public class VehicleRentalManager {
 				double cost = currEdge.nextDouble();
 				String make = currEdge.next();
 				String model = currEdge.next();
+				
+				if (startDay == 268 || endDay == 268 || startDay == 560 || endDay == 560) {
+					System.out.println("Start: " + startDay + " End: " + endDay + " Cost: " + cost + " Make: " + make + " Model: " + model);
+				}
 				
 				/* 
 				  1. Check if the adjacency list already has vertex objects corresponding to the START_DAY
