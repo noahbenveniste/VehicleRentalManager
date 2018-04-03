@@ -45,7 +45,6 @@ public class VehicleRentalManager {
 	 */
 	public String getRentals(int start, int end) {
 		
-		
 		// Call dijkstra's algorithm to handle getting the shortest path
 	    dijkstra(start, end);
 	    
@@ -193,10 +192,6 @@ public class VehicleRentalManager {
 				double cost = currEdge.nextDouble();
 				String make = currEdge.next();
 				String model = currEdge.next();
-				
-				if (startDay == 268 || endDay == 268 || startDay == 560 || endDay == 560) {
-					System.out.println("Start: " + startDay + " End: " + endDay + " Cost: " + cost + " Make: " + make + " Model: " + model);
-				}
 				
 				/* 
 				  1. Check if the adjacency list already has vertex objects corresponding to the START_DAY
