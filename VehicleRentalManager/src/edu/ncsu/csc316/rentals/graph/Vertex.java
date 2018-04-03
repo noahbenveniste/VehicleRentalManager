@@ -28,10 +28,6 @@ public class Vertex implements Comparable<Vertex> {
 	/** */
 	private Edge parentEdge;
 	
-	public Vertex child;
-	
-	public Edge childEdge;
-	
 	
 	/**
 	 * 
@@ -160,8 +156,6 @@ public class Vertex implements Comparable<Vertex> {
 		this.cumulativeCost = 0;
 		this.parent = null;
 		this.parentEdge = null;
-		this.child = null;
-		this.childEdge = null;
 		this.position = -1;
 	}
 

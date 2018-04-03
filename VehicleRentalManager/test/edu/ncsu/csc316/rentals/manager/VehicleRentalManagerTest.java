@@ -99,16 +99,26 @@ public class VehicleRentalManagerTest {
 				"   From day 1 to day 2: $85.00, Chevrolet Tahoe\n" + 
 				"   From day 2 to day 4: $90.00, Jeep Cherokee\n" + 
 				"   From day 4 to day 5: $50.00, Honda Accord\n" + 
-				"   No rentals available on day 6\n" +
+				"   No rentals available on day 5\n" +
 				"]", actual2);
 		String actual3 = vrm.getRentals(2, 7);
 		assertEquals("Rental total is $140.00\n" + 
 				"[\n" + 
 				"   From day 2 to day 4: $90.00, Jeep Cherokee\n" + 
 				"   From day 4 to day 5: $50.00, Honda Accord\n" + 
-				"   No rentals available on day 6\n" +
-				"   No rentals available on day 7\n" +
+				"   No rentals available on day 5\n" +
 				"]", actual3);
+		
+		// Test with days that span two disjoint trees
+		vrm = new VehicleRentalManager("input/disjoint.csv");
+		String actual4 = vrm.getRentals(1, 100);
+		assertEquals("Rental total is $205.00\n" + 
+				"[\n" + 
+				"   From day 1 to day 2: $85.00, Chevrolet Tahoe\n" + 
+				"   From day 2 to day 3: $65.00, Jeep Compass\n" + 
+				"   From day 3 to day 4: $55.00, Kia Soul\n" + 
+				"   No rentals available on day 4\n" + 
+				"]", actual4);
 		
 	}
 

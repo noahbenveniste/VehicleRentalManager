@@ -69,14 +69,23 @@ public class VehicleRentalManager {
 	    StringBuilder sb = null;
 	    
 	    // Handles the case where the end day is out of range for the graph
-	    while (end > adjList.size()) {
-	    	sb = new StringBuilder();
-	    	s.push(sb.append("No rentals available on day ").append(end).toString());
+	    boolean flag = false;
+	    while (end - 1 >= adjList.size()) {
+	    	flag = true;
 	    	end--;
 	    }
+	    // After this loop, end is guaranteed to be at most size - 1
 	    
-	    // After the end day is decremented properly, get the last node covered
-	    // in the range
+	    // Handles the case of a disjoint tree: loop until adjList[idx - 1].getCumulativeCost is not Integer.MAX_VALUE
+	    while ( adjList.get(end - 1).getCumulativeCost() == Integer.MAX_VALUE ) {
+	    	flag = true;
+	    	end--;
+	    }
+	    if (flag) {
+	    	sb = new StringBuilder();
+	    	s.push(sb.append("No rentals available on day ").append(end).toString());
+	    }
+	    
 	    Vertex curr = adjList.get(end - 1);
 	    
 	    while (curr.getParentEdge() != null && curr.getParent() != null) {
