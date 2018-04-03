@@ -100,7 +100,7 @@ public class VehicleRentalManager {
 		edges.quickSort();
 		
 		// Build output string
-		StringBuilder sb = new StringBuilder("Available Rentals for day ");
+		StringBuilder sb = new StringBuilder("Available rentals for day ");
 		sb.append(day).append("\n");
 		if (edges.size() == 0) {
 			sb.append("   No rentals available.\n");

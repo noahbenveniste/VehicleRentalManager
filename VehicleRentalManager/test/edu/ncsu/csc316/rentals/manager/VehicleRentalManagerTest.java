@@ -40,7 +40,7 @@ public class VehicleRentalManagerTest {
 		// Check that each vertex has the correct adjacent edge list
 		Vertex day1 = vrm.getGraph().get(0);
 		assertEquals(4, day1.getAdjacentEdges().size());
-		assertEquals("Available Rentals for day 1\n" + 
+		assertEquals("Available rentals for day 1\n" + 
 				"   $85.00 Chevrolet Tahoe for day 1 to day 2\n" + 
 				"   $180.00 Chevrolet Silverado for day 1 to day 3\n" + 
 				"   $255.00 Toyota Prius for day 1 to day 4\n" + 
@@ -49,7 +49,7 @@ public class VehicleRentalManagerTest {
 		
 		Vertex day2 = vrm.getGraph().get(1);
 		assertEquals(3, day2.getAdjacentEdges().size());
-		assertEquals("Available Rentals for day 2\n" + 
+		assertEquals("Available rentals for day 2\n" + 
 				"   $65.00 Jeep Compass for day 2 to day 3\n" + 
 				"   $90.00 Jeep Cherokee for day 2 to day 4\n" + 
 				"   $220.00 Ford Explorer for day 2 to day 5\n" + 
@@ -57,20 +57,20 @@ public class VehicleRentalManagerTest {
 		
 		Vertex day3 = vrm.getGraph().get(2);
 		assertEquals(2, day3.getAdjacentEdges().size());
-		assertEquals("Available Rentals for day 3\n" +
+		assertEquals("Available rentals for day 3\n" +
 				"   $55.00 Kia Soul for day 3 to day 4\n" +
 				"   $90.00 Ford Explorer for day 3 to day 5\n" +
 				"]", vrm.getRentalsForDay(3));
 		
 		Vertex day4 = vrm.getGraph().get(3);
 		assertEquals(1, day4.getAdjacentEdges().size());
-		assertEquals("Available Rentals for day 4\n" +
+		assertEquals("Available rentals for day 4\n" +
 				"   $50.00 Honda Accord for day 4 to day 5\n" +
 				"]", vrm.getRentalsForDay(4));
 		
 		Vertex day5 = vrm.getGraph().get(4);
 		assertEquals(0, day5.getAdjacentEdges().size());
-		assertEquals("Available Rentals for day 5\n" +
+		assertEquals("Available rentals for day 5\n" +
 				"   No rentals available.\n" +
 				"]", vrm.getRentalsForDay(5));
 		
