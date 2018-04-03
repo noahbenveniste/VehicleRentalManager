@@ -92,6 +92,7 @@ public class VehicleRentalManagerTest {
 				"   From day 2 to day 4: $90.00, Jeep Cherokee\n" + 
 				"   From day 4 to day 5: $50.00, Honda Accord\n" + 
 				"]", actual1);
+		
 		String actual2 = vrm.getRentals(1, 6);
 		assertEquals("Rental total is $225.00\n" + 
 				"[\n" + 

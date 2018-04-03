@@ -30,7 +30,14 @@ public class VehicleRentalManager {
 	public VehicleRentalManager(String pathToFile) {
 		
 		this.adjList = new ArrayList<Vertex>();
+		
+		long startTime = System.currentTimeMillis();
+
 		buildGraph(pathToFile);
+
+		long endTime = System.currentTimeMillis();
+
+		System.out.println(new StringBuilder("Took ").append(endTime - startTime).append(" milliseconds to build the adjacency list\n").toString());
 		
 	}
 	
@@ -46,7 +53,14 @@ public class VehicleRentalManager {
 	public String getRentals(int start, int end) {
 		
 		// Call dijkstra's algorithm to handle getting the shortest path
-	    dijkstra(start, end);
+		long startTime = System.currentTimeMillis();
+
+		dijkstra(start, end);
+
+		long endTime = System.currentTimeMillis();
+
+		System.out.println(new StringBuilder("Took ").append(endTime - startTime).append(" milliseconds to find the shortest path").toString());
+	    
 	    
 	    // Initialize a stack and cost counter for generating output
 	    LinkedStack<String> s = new LinkedStack<String>();
@@ -65,7 +79,6 @@ public class VehicleRentalManager {
 	    Vertex curr = adjList.get(end - 1);
 	    
 	    while (curr.getParentEdge() != null && curr.getParent() != null) {
-	    	sb = new StringBuilder();
 	    	totalCost += curr.getParentEdge().getCost(); // TODO: NPE being thrown here
 	    	s.push(curr.getParentEdge().toString());
 	    	curr = curr.getParent();
@@ -82,8 +95,32 @@ public class VehicleRentalManager {
 	    }
 	    
 	    sb.append("]");
+	    
+	    System.out.println("growArray() performed " + ArrayList.numArrayGrowths + " times\n");
 	    return sb.toString();
 	    
+//	    sb = new StringBuilder();
+//	    
+//	    Vertex curr = adjList.get(start - 1);
+//	    while (curr != null) {
+//	    	if (curr.child == null || curr.childEdge == null) {
+//	    		sb.append("   No rentals available on day ").append(curr.getDay()).append("\n");
+//	    		break;
+//	    	}
+//	    	sb.append("   ").append(curr.childEdge.toString()).append("\n");
+//	    	totalCost += curr.childEdge.getCost();
+//	    	curr = curr.child;
+//	    }
+//	    
+//	    sb.append("]");
+//	    
+//	    StringBuilder sb2 = new StringBuilder("Rental total is $");
+//	    Formatter f = new Formatter(sb2);
+//	    f.format("%.2f", totalCost);
+//	    f.close();
+//	    sb2.append("\n[\n").append(sb.toString());
+//	    return sb2.toString();
+//	    
 	}
 	
 	/**

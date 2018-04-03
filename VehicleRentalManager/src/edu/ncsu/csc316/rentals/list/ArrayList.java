@@ -25,6 +25,8 @@ public class ArrayList<E extends Comparable<E>> {
 	private int size;
 	/** The total capacity of the underlying array */
 	private int capacity;
+	
+	public static int numArrayGrowths = 0;
 
 	/**
 	 * Constructs an empty ArrayList of size zero with an initial capacity of ten
@@ -105,6 +107,7 @@ public class ArrayList<E extends Comparable<E>> {
 		}
 		// Assign the new array to the list field
 		this.list = temp;
+		numArrayGrowths++;
 	}
 
 	/**
