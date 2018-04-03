@@ -44,6 +44,8 @@ public class VehicleRentalManager {
 	 * @return the String representation of the rentals
 	 */
 	public String getRentals(int start, int end) {
+		System.out.println("Start: " + start);
+		System.out.println("End: " + end);
 		
 		// Call dijkstra's algorithm to handle getting the shortest path
 	    dijkstra(start, end);
