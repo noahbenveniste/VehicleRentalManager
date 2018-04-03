@@ -43,7 +43,7 @@ public class AdaptablePriorityQueue {
 		
 		// Update v's priority (its cumulative cost field)
 		int pos = v.getPosition();
-		heap.list.get(pos).setCumulativeCost(newPriority); // TODO: NPE being thrown here
+		heap.list.get(pos).setCumulativeCost(newPriority); // TODO: NPE being thrown here (most likely something to do with a position not being updated properly)
 		
 		// Check if upHeap or downHeap needs to be done to preserve heap ordering property
 		Vertex parent = heap.list.get( (pos - 1) / 2 );

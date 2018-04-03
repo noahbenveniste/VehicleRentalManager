@@ -67,7 +67,9 @@ public class MinHeap {
 				
 				upHeap( ( i - 1 ) / 2 );
 			}
+			
 		}
+		
 	}
 	
 	/**
@@ -137,6 +139,9 @@ public class MinHeap {
 			// Don't forget to update each vertex's position field
 			list.get(i).setPosition(i);
 			list.get(m).setPosition(m);
+			
+			// Downheap
+			downHeap(i);
 		}
 		
 	}
