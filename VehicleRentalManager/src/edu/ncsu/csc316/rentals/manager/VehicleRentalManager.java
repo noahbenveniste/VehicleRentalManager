@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Formatter;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import edu.ncsu.csc316.rentals.graph.Edge;
 import edu.ncsu.csc316.rentals.graph.Vertex;
@@ -111,28 +112,6 @@ public class VehicleRentalManager {
 	    System.out.println("growArray() performed " + ArrayList.numArrayGrowths + " times\n");
 	    return sb.toString();
 	    
-//	    sb = new StringBuilder();
-//	    
-//	    Vertex curr = adjList.get(start - 1);
-//	    while (curr != null) {
-//	    	if (curr.child == null || curr.childEdge == null) {
-//	    		sb.append("   No rentals available on day ").append(curr.getDay()).append("\n");
-//	    		break;
-//	    	}
-//	    	sb.append("   ").append(curr.childEdge.toString()).append("\n");
-//	    	totalCost += curr.childEdge.getCost();
-//	    	curr = curr.child;
-//	    }
-//	    
-//	    sb.append("]");
-//	    
-//	    StringBuilder sb2 = new StringBuilder("Rental total is $");
-//	    Formatter f = new Formatter(sb2);
-//	    f.format("%.2f", totalCost);
-//	    f.close();
-//	    sb2.append("\n[\n").append(sb.toString());
-//	    return sb2.toString();
-//	    
 	}
 	
 	/**
@@ -227,54 +206,42 @@ public class VehicleRentalManager {
 		// Loop while the file has lines to read
 		while (edges.hasNextLine()) {
 			
-			// Make a scanner for the current line
+			// Make a StringTokenizer for the current line
 			String curr = edges.nextLine();
-			//System.out.println(curr);
-			Scanner currEdge = new Scanner(curr);
-			currEdge.useDelimiter(",");
+			StringTokenizer st = new StringTokenizer(curr, ",", false);
 			
-			// Try to parse the edge data from the current line
-			try {
+			int startDay = Integer.parseInt(st.nextToken());
+			int endDay = Integer.parseInt(st.nextToken());
+			double cost = (double) Integer.parseInt(st.nextToken());
+			String make = st.nextToken();
+			String model = st.nextToken();
 				
-				int startDay = currEdge.nextInt();
-				int endDay = currEdge.nextInt();
-				double cost = currEdge.nextDouble();
-				String make = currEdge.next();
-				String model = currEdge.next();
-				
-				/* 
-				  1. Check if the adjacency list already has vertex objects corresponding to the START_DAY
-		             and END_DAY values read in from the line
-		              -these values correspond to the index + 1 in the list where the vertex object should be placed
-		       		  i. The index has a vertex already: grab its reference and use it to construct the edge
-		       		 ii. The index DOESN'T have a vertex: create a new Vertex object, add it to the list, use it
-		       		     to create the edge object
-		       	  2. Add the newly create edge object to the incident edge list for each vertex (just look them up in the list
-		             by index)
-				 */
-				
-				// If the adjList doesn't already contain a vertex for the start day
-				if ( adjList.get(startDay - 1) == null ) {
-					adjList.set(startDay - 1, new Vertex(startDay));
-				}
-				
-				// If the adjList doesn't already contain a vertex for the end day
-				if ( adjList.get(endDay - 1) == null) {
-					adjList.set(endDay - 1, new Vertex(endDay));
-				}
-				
-				// Create the edge object using the data parsed from the current line in the file
-				Edge e = new Edge(adjList.get(startDay - 1), adjList.get(endDay - 1), cost, make, model);
-				
-				// Add the newly created edge to the start day's adjacent edge list
-				adjList.get(startDay - 1).addAdjacentEdge(e);
-
-				// Close the scanner for the line
-				currEdge.close();
-				
-			} catch (NoSuchElementException e) {
-				// Do nothing
+			/* 
+			  1. Check if the adjacency list already has vertex objects corresponding to the START_DAY
+	             and END_DAY values read in from the line
+	              -these values correspond to the index + 1 in the list where the vertex object should be placed
+	       		  i. The index has a vertex already: grab its reference and use it to construct the edge
+	       		 ii. The index DOESN'T have a vertex: create a new Vertex object, add it to the list, use it
+	       		     to create the edge object
+	       	  2. Add the newly create edge object to the incident edge list for each vertex (just look them up in the list
+	             by index)
+			 */
+			
+			// If the adjList doesn't already contain a vertex for the start day
+			if ( adjList.get(startDay - 1) == null ) {
+				adjList.set(startDay - 1, new Vertex(startDay));
 			}
+			
+			// If the adjList doesn't already contain a vertex for the end day
+			if ( adjList.get(endDay - 1) == null) {
+				adjList.set(endDay - 1, new Vertex(endDay));
+			}
+			
+			// Create the edge object using the data parsed from the current line in the file
+			Edge e = new Edge(adjList.get(startDay - 1), adjList.get(endDay - 1), cost, make, model);
+			
+			// Add the newly created edge to the start day's adjacent edge list
+			adjList.get(startDay - 1).addAdjacentEdge(e);
 			
 		}
 		
