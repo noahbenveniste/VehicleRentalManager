@@ -182,7 +182,7 @@ public class VehicleRentalManager {
 			
 			// Make a scanner for the current line
 			String curr = edges.nextLine();
-			System.out.println(curr);
+			//System.out.println(curr);
 			Scanner currEdge = new Scanner(curr);
 			currEdge.useDelimiter(",");
 			
