@@ -60,7 +60,7 @@ public class AdaptablePriorityQueue {
 	 * @return
 	 */
 	public boolean isEmpty() {
-		return false;
+		return this.heap.isEmpty();
 	}
 
 }

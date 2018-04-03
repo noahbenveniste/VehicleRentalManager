@@ -18,7 +18,7 @@ public class ArrayList<E extends Comparable<E>> {
 	/**
 	 * The array's current size, based on the number of non-null elements present
 	 */
-	private static final int INIT_SIZE = 3000;
+	private static final int INIT_SIZE = 5000;
 	/** The underlying array for the ArrayList */
 	private E[] list;
 	/** The number of elements that has been placed in the array */
@@ -155,8 +155,11 @@ public class ArrayList<E extends Comparable<E>> {
 		if (element == null) {
 			throw new NullPointerException("Cannot set null elements");
 		}
-		if (idx < 0 || idx >= this.size()) {
+		if (idx < 0 || idx >= this.capacity) {
 			throw new IndexOutOfBoundsException("Index is outside the acceptable range");
+		}
+		if (list[idx] == null) {
+			this.size++;
 		}
 		E temp = list[idx];
 		list[idx] = element;
@@ -173,10 +176,15 @@ public class ArrayList<E extends Comparable<E>> {
 	 *             if the specified index is out of bounds
 	 */
 	public E get(int idx) {
-		if (idx < 0 || idx >= this.capacity) {
+		if (idx < 0) {
+			throw new IndexOutOfBoundsException("Index is outside the acceptable range");
+		} else if (idx >= this.capacity) {
 			this.growArray();
+			return this.list[idx];
+		} else {
+			return this.list[idx];
 		}
-		return this.list[idx];
+		
 	}
 
 	/**

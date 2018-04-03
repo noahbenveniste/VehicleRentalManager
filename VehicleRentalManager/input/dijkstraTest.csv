@@ -1,0 +1,11 @@
+START_DAY,END_DAY,COST,MAKE,MODEL
+1,5,6,make,model
+1,6,3,make,model
+2,3,6,make,model
+4,3,4,make,model
+4,2,1,make,model
+4,5,1,make,model
+5,4,3,make,model
+5,2,1,make,model
+6,4,3,make,model
+6,5,1,make,model

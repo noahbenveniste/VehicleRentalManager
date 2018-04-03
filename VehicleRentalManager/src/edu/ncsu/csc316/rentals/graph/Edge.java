@@ -1,5 +1,7 @@
 package edu.ncsu.csc316.rentals.graph;
 
+import java.util.Formatter;
+
 /**
  * 
  * @author Noah Benveniste
@@ -29,6 +31,14 @@ public class Edge implements Comparable<Edge> {
 	}
 
 	/**
+	 * 
+	 * @return
+	 */
+	public double getCost() {
+		return this.cost;
+	}
+	
+	/**
 	 * Given an integer corresponding to one vertex on the edge,
 	 * returns the other vertex. Or, if the edge doesn't contain
 	 * a vertex with the given integer, returns null
@@ -37,16 +47,66 @@ public class Edge implements Comparable<Edge> {
 	 * @return
 	 */
 	public Vertex getOpposite(int n) {
-		return null;
+		if (n == startDay.getDay()) {
+			return endDay;
+		} else if (n == endDay.getDay()) {
+			return startDay;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
 	 * 
 	 */
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("From day ")
+		  .append(startDay.getDay())
+		  .append(" to day ")
+		  .append(endDay.getDay())
+		  .append(": $");
+		Formatter f = new Formatter(sb);
+		f.format("%.2f", cost);
+		f.close();
+		sb.append(", ")
+		  .append(make)
+		  .append(" ")
+		  .append(model);
+		return sb.toString();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String toStringAlt() {
+		StringBuilder sb = new StringBuilder("$");
+		Formatter f = new Formatter(sb);
+		f.format("%.2f", cost);
+		f.close();
+		sb.append(" ")
+		  .append(make).append(" ")
+		  .append(model).append(" for day ")
+		  .append(startDay.getDay())
+		  .append(" to day ")
+		  .append(endDay.getDay());
+		return sb.toString();
+	}
+	
+	/**
+	 * Used for sorting edges for outputting in order of decreasing cost
+	 */
 	@Override
 	public int compareTo(Edge o) {
-		// TODO Auto-generated method stub
-		return 0;
+		double result = this.cost - o.getCost();
+		if (result < 0) {
+			return -1;
+		} else if (result > 0) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 }

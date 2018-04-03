@@ -1,6 +1,6 @@
 package edu.ncsu.csc316.rentals.graph;
 
-import edu.ncsu.csc316.rentals.list.LinkedAbstractList;
+import edu.ncsu.csc316.rentals.list.ArrayList;
 
 /**
  * 
@@ -13,7 +13,7 @@ public class Vertex implements Comparable<Vertex> {
 	/** */
 	private int day;
 	/** */
-	private LinkedAbstractList<Edge> incidentEdges;
+	private ArrayList<Edge> adjacentEdges;
 	
 	/* Fields used by Dijkstra's algorithm for generating the shortest path */
 	
@@ -34,8 +34,16 @@ public class Vertex implements Comparable<Vertex> {
 	 */
 	public Vertex(int day) {
 		this.day = day;
-		this.incidentEdges = new LinkedAbstractList<Edge>();
+		this.adjacentEdges = new ArrayList<Edge>();
 		this.resetVertex();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getDay() {
+		return this.day;
 	}
 
 	/**
@@ -72,18 +80,66 @@ public class Vertex implements Comparable<Vertex> {
 	
 	/**
 	 * 
-	 * @param e
 	 */
-	public void addIncidentEdge(Edge e) {
-		this.incidentEdges.add(this.incidentEdges.size(), e);
+	public void setFound() {
+		this.found = true;
 	}
 	
 	/**
 	 * 
+	 * @param p
+	 */
+	public void setParent(Vertex p) {
+		this.parent = p;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Vertex getParent() {
+		return this.parent;
+	}
+	
+	/**
+	 * 
+	 * @param p
+	 */
+	public void setParentEdge(Edge p) {
+		this.parentEdge = p;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Edge getParentEdge() {
+		return this.parentEdge;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Edge> getAdjacentEdges() {
+		return this.adjacentEdges;
+	}
+	
+	/**
+	 * 
+	 * @param e
+	 */
+	public void addAdjacentEdge(Edge e) {
+		this.adjacentEdges.add(this.adjacentEdges.size(), e);
+	}
+	
+	/**
+	 * This method isn't used; just here to satisfy the array list
+	 * 
+	 * @return 0 always
 	 */
 	@Override
 	public int compareTo(Vertex o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	

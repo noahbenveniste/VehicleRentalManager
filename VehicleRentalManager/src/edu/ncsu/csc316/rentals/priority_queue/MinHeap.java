@@ -88,6 +88,7 @@ public class MinHeap {
 		Vertex out = list.get(0);
 		// 2.
 		list.set(0, list.get(size - 1));
+		list.get(0).setPosition(0);
 		// 3.
 		list.remove(size - 1);
 		this.size--;
@@ -138,6 +139,14 @@ public class MinHeap {
 			list.get(m).setPosition(m);
 		}
 		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isEmpty() {
+		return this.size == 0;
 	}
 
 }

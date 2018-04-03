@@ -2,13 +2,20 @@ package edu.ncsu.csc316.rentals.manager;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Formatter;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import edu.ncsu.csc316.rentals.graph.Edge;
 import edu.ncsu.csc316.rentals.graph.Vertex;
 import edu.ncsu.csc316.rentals.list.ArrayList;
+import edu.ncsu.csc316.rentals.priority_queue.AdaptablePriorityQueue;
+import edu.ncsu.csc316.rentals.stack.LinkedStack;
 
+/**
+ * 
+ * @author Noah Benveniste
+ */
 public class VehicleRentalManager {
 	
 	/** */
@@ -21,7 +28,10 @@ public class VehicleRentalManager {
 	 *            - the path to the employee input file
 	 */
 	public VehicleRentalManager(String pathToFile) {
+		
 		this.adjList = new ArrayList<Vertex>();
+		buildGraph(pathToFile);
+		
 	}
 	
 	/**
@@ -34,8 +44,46 @@ public class VehicleRentalManager {
 	 * @return the String representation of the rentals
 	 */
 	public String getRentals(int start, int end) {
-	    // TODO Add your code here
-		return null;
+		
+		// Call dijkstra's algorithm to handle getting the shortest path
+	    dijkstra(start, end);
+	    
+	    // Initialize a stack and cost counter for generating output
+	    LinkedStack<String> s = new LinkedStack<String>();
+	    double totalCost = 0;
+	    StringBuilder sb = null;
+	    
+	    // Handles the case where the end day is out of range for the graph
+	    while (end > adjList.size()) {
+	    	sb = new StringBuilder();
+	    	s.push(sb.append("No rentals available on day ").append(end).toString());
+	    	end--;
+	    }
+	    
+	    // After the end day is decremented properly, get the last node covered
+	    // in the range
+	    Vertex curr = adjList.get(end - 1);
+	    
+	    do {
+	    	sb = new StringBuilder();
+	    	totalCost += curr.getParentEdge().getCost();
+	    	s.push(curr.getParentEdge().toString());
+	    	curr = curr.getParent();
+	    } while (curr.getParent() != null);
+
+	    sb = new StringBuilder("Rental total is $");
+	    Formatter f = new Formatter(sb);
+	    f.format("%.2f", totalCost);
+	    f.close();
+	    sb.append("\n[\n");
+	    
+	    while (!s.isEmpty()) {
+	    	sb.append("   ").append(s.pop()).append("\n");
+	    }
+	    
+	    sb.append("]");
+	    return sb.toString();
+	    
 	}
 	
 	/**
@@ -46,8 +94,68 @@ public class VehicleRentalManager {
 	 * @return the String representation of the rentals
 	 */
 	public String getRentalsForDay(int day) {
-	    // List the incident edges for the specified day
-		return null;
+		
+	    // List the incident edges for the specified day sorted in ascending order by cost
+		ArrayList<Edge> edges = adjList.get(day - 1).getAdjacentEdges();
+		edges.quickSort();
+		
+		// Build output string
+		StringBuilder sb = new StringBuilder("Available Rentals for day ");
+		sb.append(day).append("\n");
+		if (edges.size() == 0) {
+			sb.append("   No rentals available.\n");
+		} else {
+			for (int i = 0; i < edges.size(); i++) {
+				sb.append("   ").append(edges.get(i).toStringAlt()).append("\n");
+			}
+		}
+		sb.append("]");
+		return sb.toString();
+		
+	}
+	
+	/**
+	 * 
+	 * @param startDay
+	 * @param endDay
+	 */
+	private void dijkstra(int startDay, int endDay) {
+		
+		// Initialize PQ
+		AdaptablePriorityQueue q = new AdaptablePriorityQueue();
+		
+		// For all vertices in the adjacency list, initialize for dijkstra's
+		for (int i = 0; i < this.adjList.size(); i++) {
+			adjList.get(i).resetVertex();
+			if (adjList.get(i).getDay() == startDay) {
+				adjList.get(i).setCumulativeCost(0);
+			} else {
+				adjList.get(i).setCumulativeCost(Integer.MAX_VALUE);
+			}
+			q.insert(adjList.get(i));
+		}
+		
+		// Main loop for determining shortest path
+		while (!q.isEmpty()) {
+			Vertex u = q.deleteMin();
+			u.setFound();
+			
+			// Loop through all of u's incident edges
+			for (int i = 0; i < u.getAdjacentEdges().size(); i++) {
+				Edge e = u.getAdjacentEdges().get(i);
+				Vertex z = e.getOpposite(u.getDay());
+				double r = e.getCost() + u.getCumulativeCost();
+				if (r < z.getCumulativeCost()) {
+					z.setCumulativeCost(r);
+					z.setParent(u);
+					z.setParentEdge(e);
+					q.updatePriority(z, r);
+				}
+				
+			}
+			
+		}
+		
 	}
 	
 	/**
@@ -55,32 +163,6 @@ public class VehicleRentalManager {
 	 * @param fileName
 	 */
 	private void buildGraph(String fileName) {
-		/* 
-		   Each line in the csv file is of the following format:
-		   <start (day) vertex> <end (day) vertex> <edge weight (cost)> <make> <model>
-		   
-		   TODO: Make the following changes to the arraylist class:
-		       i. Update the add(index, E) method to allow the index to be out of bounds
-		          for the array's SIZE; instead, check that the index isn't out of the
-		          array's CAPACITY
-		      ii. If an element to add is at an index outside of the array's CAPACITY, call
-		          the ensureCapacity() method
-		     iii. Also add this check to the get(index) method (i.e. call ensureCapacity if out of capacity)
-		   
-		   SETUP: Initialize the adjacency list to some arbitrarily large size (should have
-		          all elements NULL)
-		       
-		       1. Read in the next line of input
-		       2. Check if the adjacency list already has vertex objects corresponding to the START_DAY
-		          and END_DAY values read in from the line
-		              -these values correspond to the index + 1 in the list where the vertex object should be placed
-		       		  i. The index has a vertex already: grab its reference and use it to construct the edge
-		       		 ii. The index DOESN'T have a vertex: create a new Vertex object, add it to the list, use it
-		       		     to create the edge object
-		       3. Add the newly create edge object to the incident edge list for each vertex (just look them up in the list
-		          by index)
-		       
-		 */
 		
 		// Try to create a file scanner for the input file
 		Scanner edges = null;
@@ -134,9 +216,8 @@ public class VehicleRentalManager {
 				// Create the edge object using the data parsed from the current line in the file
 				Edge e = new Edge(adjList.get(startDay - 1), adjList.get(endDay - 1), cost, make, model);
 				
-				// Add the newly created edge to the start day and end day's incident edge lists
-				adjList.get(startDay - 1).addIncidentEdge(e);
-				adjList.get(endDay - 1).addIncidentEdge(e);
+				// Add the newly created edge to the start day's adjacent edge list
+				adjList.get(startDay - 1).addAdjacentEdge(e);
 
 				// Close the scanner for the line
 				currEdge.close();
@@ -149,6 +230,16 @@ public class VehicleRentalManager {
 		
 		// Close the file scanner
 		edges.close();
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Vertex> getGraph() {
+		
+		return this.adjList;
 		
 	}
 
