@@ -134,7 +134,7 @@ public class Vertex implements Comparable<Vertex> {
 	 * @param e
 	 */
 	public void addAdjacentEdge(Edge e) {
-		this.adjacentEdges.add(this.adjacentEdges.size(), e);
+		this.adjacentEdges.add(e);
 	}
 	
 	/**

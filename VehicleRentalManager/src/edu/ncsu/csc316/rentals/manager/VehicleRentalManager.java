@@ -61,6 +61,7 @@ public class VehicleRentalManager {
 
 		System.out.println(new StringBuilder("Took ").append(endTime - startTime).append(" milliseconds to find the shortest path").toString());
 	    
+	    startTime = System.currentTimeMillis();
 	    
 	    // Initialize a stack and cost counter for generating output
 	    LinkedStack<String> s = new LinkedStack<String>();
@@ -96,6 +97,8 @@ public class VehicleRentalManager {
 	    
 	    sb.append("]");
 	    
+	    endTime = System.currentTimeMillis();
+	    System.out.println(new StringBuilder("Took ").append(endTime - startTime).append(" milliseconds to generate output string").toString());
 	    System.out.println("growArray() performed " + ArrayList.numArrayGrowths + " times\n");
 	    return sb.toString();
 	    
