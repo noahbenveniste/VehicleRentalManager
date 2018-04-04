@@ -25,7 +25,7 @@ public class ArrayList<E extends Comparable<E>> {
 	private int size;
 	/** The total capacity of the underlying array */
 	private int capacity;
-	
+	/** The number of times the growArray() method is called; used for performance analysis */
 	public static int numArrayGrowths = 0;
 
 	/**

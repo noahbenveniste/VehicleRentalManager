@@ -3,7 +3,6 @@ package edu.ncsu.csc316.rentals.manager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Formatter;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -14,12 +13,15 @@ import edu.ncsu.csc316.rentals.priority_queue.AdaptablePriorityQueue;
 import edu.ncsu.csc316.rentals.stack.LinkedStack;
 
 /**
+ * Manager class that handles construction of the graph as well as
+ * functionality relating to generating the shortest path or querying
+ * adjacent edges for a given vertex (day)
  * 
  * @author Noah Benveniste
  */
 public class VehicleRentalManager {
 	
-	/** */
+	/** An adjacency list representation of a graph */
 	private ArrayList<Vertex> adjList;
 
 	/**
@@ -31,14 +33,7 @@ public class VehicleRentalManager {
 	public VehicleRentalManager(String pathToFile) {
 		
 		this.adjList = new ArrayList<Vertex>();
-		
-		long startTime = System.currentTimeMillis();
-
 		buildGraph(pathToFile);
-
-		long endTime = System.currentTimeMillis();
-
-		System.out.println(new StringBuilder("Took ").append(endTime - startTime).append(" milliseconds to build the adjacency list\n").toString());
 		
 	}
 	
@@ -54,15 +49,7 @@ public class VehicleRentalManager {
 	public String getRentals(int start, int end) {
 		
 		// Call dijkstra's algorithm to handle getting the shortest path
-		long startTime = System.currentTimeMillis();
-
 		dijkstra(start, end);
-
-		long endTime = System.currentTimeMillis();
-
-		System.out.println(new StringBuilder("Took ").append(endTime - startTime).append(" milliseconds to find the shortest path").toString());
-	    
-	    startTime = System.currentTimeMillis();
 	    
 	    // Initialize a stack and cost counter for generating output
 	    LinkedStack<String> s = new LinkedStack<String>();
@@ -90,7 +77,7 @@ public class VehicleRentalManager {
 	    Vertex curr = adjList.get(end - 1);
 	    
 	    while (curr.getParentEdge() != null && curr.getParent() != null) {
-	    	totalCost += curr.getParentEdge().getCost(); // TODO: NPE being thrown here
+	    	totalCost += curr.getParentEdge().getCost();
 	    	s.push(curr.getParentEdge().toString());
 	    	curr = curr.getParent();
 	    }
@@ -107,9 +94,6 @@ public class VehicleRentalManager {
 	    
 	    sb.append("]");
 	    
-	    endTime = System.currentTimeMillis();
-	    System.out.println(new StringBuilder("Took ").append(endTime - startTime).append(" milliseconds to generate output string").toString());
-	    System.out.println("growArray() performed " + ArrayList.numArrayGrowths + " times\n");
 	    return sb.toString();
 	    
 	}
@@ -143,9 +127,11 @@ public class VehicleRentalManager {
 	}
 	
 	/**
+	 * Generates the shortest path between the vertices corresponding to
+	 * startDay and endDay
 	 * 
-	 * @param startDay
-	 * @param endDay
+	 * @param startDay the starting vertex
+	 * @param endDay the ending vertex
 	 */
 	private void dijkstra(int startDay, int endDay) {
 		
@@ -187,8 +173,9 @@ public class VehicleRentalManager {
 	}
 	
 	/**
+	 * Builds the adjacency list from a file of input data
 	 * 
-	 * @param fileName
+	 * @param fileName path to the file containing the graph data
 	 */
 	private void buildGraph(String fileName) {
 		
@@ -251,8 +238,9 @@ public class VehicleRentalManager {
 	}
 	
 	/**
+	 * Gets the adjacency list
 	 * 
-	 * @return
+	 * @return the graph represented as an adjacency list
 	 */
 	public ArrayList<Vertex> getGraph() {
 		

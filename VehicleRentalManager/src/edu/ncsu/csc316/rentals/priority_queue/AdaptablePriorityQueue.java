@@ -1,43 +1,55 @@
 package edu.ncsu.csc316.rentals.priority_queue;
 
 import edu.ncsu.csc316.rentals.graph.Vertex;
-import edu.ncsu.csc316.rentals.list.ArrayList;
 
 /**
+ * An adaptable priority queue. Outputs elements with highest priority
+ * first (low cumulative cost). Elements can also have their cumulative
+ * costs updated at any time and PQ will adjust itself accordingly.
  * 
  * @author Noah Benveniste
  */
 public class AdaptablePriorityQueue {
-	
+	/** Implemented using a min heap */
 	private MinHeap heap;
 	
 	/**
-	 * 
+	 * Constructs an empty APQ
 	 */
 	public AdaptablePriorityQueue() {
+		
 		this.heap = new MinHeap();
+		
 	}
 	
 	/**
+	 * Inserts a vertex into the PQ
 	 * 
-	 * @param e
+	 * @param v the vertex to insert
 	 */
 	public void insert(Vertex v) {
+		
 		heap.insert(v);
+		
 	}
 	
 	/**
+	 * Gets the highest priority vertex from the PQ
 	 * 
-	 * @return
+	 * @return the highest priority vertex
 	 */
 	public Vertex deleteMin() {
+		
 		return heap.deleteMin();
+		
 	}
 	
 	/**
+	 * Updates the priority of a given element in the PQ. Requires that elements in the PQ
+	 * be location aware.
 	 * 
-	 * @param e
-	 * @param value
+	 * @param v the vertex whose priority is being updated
+	 * @param newPriority the new priority value
 	 */
 	public void updatePriority(Vertex v, double newPriority) {
 		
@@ -56,11 +68,14 @@ public class AdaptablePriorityQueue {
 	}
 	
 	/**
+	 * Checks if the APQ is empty or not
 	 * 
-	 * @return
+	 * @return true if it is, false otherwise
 	 */
 	public boolean isEmpty() {
+		
 		return this.heap.isEmpty();
+		
 	}
 
 }

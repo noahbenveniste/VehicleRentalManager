@@ -4,6 +4,8 @@ import edu.ncsu.csc316.rentals.graph.Vertex;
 import edu.ncsu.csc316.rentals.list.ArrayList;
 
 /**
+ * A min heap data structure; used to implement an adaptable priority queue
+ * i.e. has location-aware elements.
  * 
  * @author Noah Benveniste
  */
@@ -13,7 +15,7 @@ public class MinHeap {
 	private int size;
 
 	/**
-	 * 
+	 * Constructs an empty minheap
 	 */
 	public MinHeap() {
 		this.list = new ArrayList<Vertex>();
@@ -21,7 +23,9 @@ public class MinHeap {
 	}
 	
 	/**
+	 * Inserts a vertex into the minheap
 	 * 
+	 * @param v the vertex to insert
 	 */
 	public void insert(Vertex v) {
 		/*
@@ -42,6 +46,7 @@ public class MinHeap {
 	}
 	
 	/**
+	 * Performs up heap operation to preserve heap ordering property when necessary
 	 * 
 	 * @param i the position of the new element in the heap
 	 */
@@ -55,26 +60,24 @@ public class MinHeap {
 		     ii. If either of the above checks are false, return
 		 */
 		
-		if ( i > 0 ) {
-			if (list.get( ( i - 1 ) / 2 ).getCumulativeCost() > list.get( i ).getCumulativeCost()) {
-				Vertex temp = list.get( i );
-				list.set( i, list.get( ( i - 1 ) / 2 ));
-				list.set(( i - 1 ) / 2, temp);
-				
-				// Don't forget to update each vertex's position field
-				list.get( i ).setPosition(i);
-				list.get( ( i - 1 ) / 2 ).setPosition( ( i - 1 ) / 2 );
-				
-				upHeap( ( i - 1 ) / 2 );
-			}
+		if ( (i > 0) && (list.get( ( i - 1 ) / 2 ).getCumulativeCost() > list.get( i ).getCumulativeCost())) {
+			Vertex temp = list.get( i );
+			list.set( i, list.get( ( i - 1 ) / 2 ));
+			list.set(( i - 1 ) / 2, temp);
 			
+			// Don't forget to update each vertex's position field
+			list.get( i ).setPosition(i);
+			list.get( ( i - 1 ) / 2 ).setPosition( ( i - 1 ) / 2 );
+			
+			upHeap( ( i - 1 ) / 2 );
 		}
 		
 	}
 	
 	/**
+	 * Gets the vertex with the highest priority from the queue
 	 * 
-	 * @return
+	 * @return the vertex with the highest priority (lowest cumulative cost)
 	 */
 	public Vertex deleteMin() {
 		
@@ -102,7 +105,9 @@ public class MinHeap {
 	}
 	
 	/**
+	 * Performs the downHeap operation to preserve heap ordering property when necessary
 	 * 
+	 * @param m the position of the new element in the heap
 	 */
 	public void downHeap(int m) {
 		/* DOWNHEAP ALGORITHM */
@@ -121,14 +126,14 @@ public class MinHeap {
 //			downHeap(H,i)
 		int i = 0;
 		
-		if ( 2*m + 2 < this.size ) {
-			if ( list.get( 2*m + 2 ).getCumulativeCost() <= list.get( 2*m + 1 ).getCumulativeCost() ) {
-				i = 2*m + 2;
+		if ( 2 * m  + 2 < this.size ) {
+			if ( list.get( 2 * m + 2 ).getCumulativeCost() <= list.get( 2 * m + 1 ).getCumulativeCost() ) {
+				i = 2 * m + 2;
 			} else {
-				i = 2*m + 1;
+				i = 2 * m + 1;
 			}
-		} else if ( 2*m + 1 < this.size ) {
-			i = 2*m + 1;
+		} else if ( 2 * m + 1 < this.size ) {
+			i = 2 * m + 1;
 		}
 		
 		if ( (i > 0) && (list.get(m).getCumulativeCost() > list.get(i).getCumulativeCost()) ) {
@@ -147,11 +152,14 @@ public class MinHeap {
 	}
 	
 	/**
+	 * Checks if the heap is empty
 	 * 
-	 * @return
+	 * @return true if it is, false otherwise
 	 */
 	public boolean isEmpty() {
+		
 		return this.size == 0;
+		
 	}
 
 }

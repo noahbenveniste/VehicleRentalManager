@@ -17,9 +17,6 @@ public class LinkedStack<E> {
 
     /**
      * Constructs the linked stack list and sets capacity
-     * 
-     * @param capacity
-     *            the number to set the capacity for the linked stack list (max amount for size)
      */
     @SuppressWarnings("unchecked")
     public LinkedStack() {

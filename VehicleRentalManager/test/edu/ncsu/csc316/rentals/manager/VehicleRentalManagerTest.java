@@ -21,7 +21,8 @@ public class VehicleRentalManagerTest {
 	private static final String TEST_FILE = "input/sample.csv";
 	
 	/**
-	 * 
+	 * Tests construction of the manager object, including initialization of the
+	 * adjacency list graph representation
 	 */
 	@Test
 	public void testVehicleRentalManager() {
@@ -77,7 +78,7 @@ public class VehicleRentalManagerTest {
 	}
 	
 	/**
-	 * 
+	 * Tests the getRentals() method
 	 */
 	@Test
 	public void testGetRentals() {

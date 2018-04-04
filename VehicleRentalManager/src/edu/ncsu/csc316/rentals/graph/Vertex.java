@@ -3,6 +3,8 @@ package edu.ncsu.csc316.rentals.graph;
 import edu.ncsu.csc316.rentals.list.ArrayList;
 
 /**
+ * An object representing a vertex in a directed, weighted graph.
+ * Corresponds to one of the days that a rental spans.
  * 
  * @author Noah Benveniste
  */
@@ -10,27 +12,30 @@ public class Vertex implements Comparable<Vertex> {
     
 	/* Fields used for Graph structure */
 	
-	/** */
+	/** The rental day */
 	private int day;
-	/** */
+	/** The edges that leave this vertex */
 	private ArrayList<Edge> adjacentEdges;
 	
 	/* Fields used by Dijkstra's algorithm for generating the shortest path */
 	
-	/** */
+	/** The cost so far to reach this node in generating the shortest path */
 	private double cumulativeCost;
-	/** */
+	/** The node's position in the PQ */
 	private int position;
-	/** */
+	/** Whether or not this vertex has been visited by dijkstra */
+	@SuppressWarnings("unused")
 	private boolean found;
-	/** */
+	/** The vertex that precedes this one in the shortest path */
 	private Vertex parent;
-	/** */
+	/** The edge that connects this vertex to its parent */
 	private Edge parentEdge;
 	
 	
 	/**
+	 * Constructs a vertex object
 	 * 
+	 * @param day the day that the vertex corresponds to
 	 */
 	public Vertex(int day) {
 		this.day = day;
@@ -39,95 +44,106 @@ public class Vertex implements Comparable<Vertex> {
 	}
 	
 	/**
+	 * Gets the day
 	 * 
-	 * @return
+	 * @return the day
 	 */
 	public int getDay() {
 		return this.day;
 	}
 
 	/**
+	 * Sets the position
 	 * 
-	 * @param pos
+	 * @param pos the position
 	 */
 	public void setPosition(int pos) {
 		this.position = pos;
 	}
 	
 	/**
+	 * Gets the position
 	 * 
-	 * @return
+	 * @return the position
 	 */
 	public int getPosition() {
 		return this.position;
 	}
 	
 	/**
+	 * Sets the cumulative cost
 	 * 
-	 * @param cost
+	 * @param cost the cumulative cost
 	 */
 	public void setCumulativeCost(double cost) {
 		this.cumulativeCost = cost;
 	}
 	
 	/**
+	 * Gets the cumulative cost
 	 * 
-	 * @return
+	 * @return the cumulative cost
 	 */
 	public double getCumulativeCost() {
 		return this.cumulativeCost;
 	}
 	
 	/**
-	 * 
+	 * Sets the vertex to found i.e. it was visited by dijkstra
 	 */
 	public void setFound() {
 		this.found = true;
 	}
 	
 	/**
+	 * Sets the preceding vertex
 	 * 
-	 * @param p
+	 * @param p the vertex that comes before this one in the shortest path
 	 */
 	public void setParent(Vertex p) {
 		this.parent = p;
 	}
 	
 	/**
+	 * Gets the parent vertex
 	 * 
-	 * @return
+	 * @return the parent vertex
 	 */
 	public Vertex getParent() {
 		return this.parent;
 	}
 	
 	/**
+	 * Sets the edge that connects this vertex to its parent
 	 * 
-	 * @param p
+	 * @param p the parent edge
 	 */
 	public void setParentEdge(Edge p) {
 		this.parentEdge = p;
 	}
 	
 	/**
+	 * Gets the edge that connects this vertex to its parent
 	 * 
-	 * @return
+	 * @return the parent edge
 	 */
 	public Edge getParentEdge() {
 		return this.parentEdge;
 	}
 	
 	/**
+	 * Gets the list of adjacent edges
 	 * 
-	 * @return
+	 * @return the list of adjacent edges
 	 */
 	public ArrayList<Edge> getAdjacentEdges() {
 		return this.adjacentEdges;
 	}
 	
 	/**
+	 * Adds an edge to the list
 	 * 
-	 * @param e
+	 * @param e the edge to add
 	 */
 	public void addAdjacentEdge(Edge e) {
 		this.adjacentEdges.add(e);

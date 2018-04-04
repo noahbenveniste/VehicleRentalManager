@@ -5,13 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * Unit tests for the Vertex class
  * 
  * @author Noah Benveniste
  */
 public class VertexTest {
 
 	/**
-	 * 
+	 * Tests the compareTo() method
 	 */
 	@Test
 	public void testCompareTo() {
